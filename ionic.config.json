@@ -1,0 +1,7 @@
+{
+  "name": "007-watchos",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
