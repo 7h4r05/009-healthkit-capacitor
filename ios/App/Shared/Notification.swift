@@ -8,6 +8,5 @@
 import Foundation
 
 extension NSNotification.Name {
-    static let onCapValueUpdated = Notification.Name("onCapValueUpdated")
-    static let onWatchValueUpdated = Notification.Name("onWatchValueUpdated")
+    static let onHeartRateValueUpdated = Notification.Name("onHeartRateValueUpdated")
 }

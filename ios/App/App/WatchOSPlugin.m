@@ -9,7 +9,6 @@
 
 CAP_PLUGIN(WatchOSPlugin, "WatchOSPlugin",
            CAP_PLUGIN_METHOD(getState, CAPPluginReturnPromise);
-           CAP_PLUGIN_METHOD(setValue, CAPPluginReturnNone);
-           CAP_PLUGIN_METHOD(subscribe, CAPPluginReturnCallback);
+           CAP_PLUGIN_METHOD(observeHR, CAPPluginReturnCallback);
            
 )

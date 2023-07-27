@@ -53,18 +53,12 @@ class WatchOSPlugin : CAPPlugin {
         call.resolve(["status": result])
     }
     
-    @objc(setValue:)
-    func setValue(_ call: CAPPluginCall){
-        let value = call.getString("value")
-        WCSession.default.sendMessage(["value": value], replyHandler: nil)
-    }
-    
     @objc
-    func subscribe(_ call: CAPPluginCall) {
-         call.keepAlive = true
-        NotificationCenter.default.addObserver(forName: .onWatchValueUpdated, object: nil, queue: .main) {  notification in
-            call.resolve(["value": notification.object ])
+    func observeHR(_ call: CAPPluginCall) {
+        call.keepAlive = true
+        NotificationCenter.default.addObserver(forName: .onHeartRateValueUpdated, object: nil, queue: .main) {  notification in
+            print(notification.object)
+            call.resolve(["heartRate": notification.object ])
         }
-        
      }
 }

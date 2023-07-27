@@ -9,24 +9,24 @@ import { WatchOSSevice, WatchOsStatus } from './watch-os.service';
 export class AppComponent implements OnInit {
   value: string = '';
   status: WatchOsStatus | null = null;
+  hr: any = 0;
   constructor(
     private watchOsService: WatchOSSevice,
     private cd: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
-    this.watchOsService.subscribe((msg) => {
-      this.value = msg?.value ?? this.value;
-      this.cd.detectChanges();
-    });
     this.status = await this.watchOsService.getState();
-  }
-
-  async sendValue() {
-    await this.watchOsService.setValue({ value: this.value });
   }
 
   async checkStatus() {
     this.status = await this.watchOsService.getState();
+  }
+
+  async subscribe() {
+    await this.watchOsService.observeHR((result) => {
+      this.hr = result?.heartRate ?? 0;
+      this.cd.detectChanges();
+    });
   }
 }

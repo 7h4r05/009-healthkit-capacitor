@@ -33,8 +33,14 @@ class MainViewController: CAPBridgeViewController, WCSessionDelegate {
     }
     
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        let value = message["value"] as? String
+        let value = message["heartRate"] as? Int
         
-        NotificationCenter.default.post(name: .onWatchValueUpdated, object: value)
+        NotificationCenter.default.post(name: .onHeartRateValueUpdated, object: value)
+    }
+    
+    func session(_ session: WCSession, didReceiveUserInfo message: [String: Any]) {
+        let value = message["heartRate"] as? Int
+        
+        NotificationCenter.default.post(name: .onHeartRateValueUpdated, object: value)
     }
 }

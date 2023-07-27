@@ -11,8 +11,8 @@ export enum WatchOsStatus {
   WatchAppNotInstalled = 6,
 }
 
-export type SubscribeToValueCallback = (
-  message: { value: string } | null,
+export type ObserveHRCallback = (
+  message: { heartRate: number } | null,
   err?: any
 ) => void;
 
@@ -22,8 +22,7 @@ export interface WatchOSPlugin {
   getState(): Promise<{
     status: WatchOsStatus;
   }>;
-  subscribe(callback: SubscribeToValueCallback): Promise<CallbackID>;
-  setValue(data: { value: string }): Promise<void>;
+  observeHR(callback: ObserveHRCallback): Promise<CallbackID>;
 }
 
 const WatchOSPlugin = registerPlugin<WatchOSPlugin>(_pluginName);
@@ -39,17 +38,10 @@ export class WatchOSSevice {
     return result ? result.status : WatchOsStatus.CommunicationProblem;
   }
 
-  async subscribe(
-    callback: SubscribeToValueCallback
-  ): Promise<CallbackID | null> {
+  async observeHR(callback: ObserveHRCallback): Promise<CallbackID | null> {
     if (Capacitor.isPluginAvailable(_pluginName)) {
-      return await WatchOSPlugin.subscribe(callback);
+      return await WatchOSPlugin.observeHR(callback);
     }
     return null;
-  }
-  async setValue(data: { value: string }): Promise<void> {
-    if (Capacitor.isPluginAvailable(_pluginName)) {
-      await WatchOSPlugin.setValue(data);
-    }
   }
 }
